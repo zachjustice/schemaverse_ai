@@ -3,18 +3,18 @@ Helpful tables and views
 Views
 
 my_player
-id
-username
-created
-balance
-fuel_reserve
-password
-error_channel
-starting_fleet
-symbol
-rgb
+    id
+    username
+    created
+    balance
+    fuel_reserve
+    password
+    error_channel
+    starting_fleet
+    symbol
+    rgb
 
-my_player
+my_ships
     id
     fleet_id
     player_id
