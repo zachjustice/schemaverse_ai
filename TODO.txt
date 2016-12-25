@@ -1,0 +1,15 @@
+PROBLEMS
+1. code is pretty messy and not pythonic
+    Lambdas and list expressions
+
+2. Update action to mining after creating ship
+    should be a seperate action
+    should be able to pass in an array of values to update ships with
+
+3. Moving ships mixes API and AI
+    seperate it out so that we can just provide {ship:location} dict
+    have a function for providing the ship:location
+    have a function for using the ship:location
+
+4. Need to keep track of where ships are going and if they overshot
+    set ships to mining after reaching destination

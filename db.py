@@ -1,5 +1,6 @@
 import psycopg2 #import postgresql connection library
 from psycopg2.extras import NamedTupleConnection
+import traceback
 
 class db:
     
@@ -27,12 +28,17 @@ class db:
             else:
                 cur.execute(query, data)
         except Exception, e:
-            print "Query failed:", e
+            traceback.print_exc(e)
         return cur
+
+    def get_current_tic(self):
+        query = "SELECT last_value FROM tic_seq;"
+        return self.fetchone(query).last_value
 
     def convert_fuel_to_money(self, amount=None):
         if amount == None:
-            query ="SELECT convert_resource('FUEL', my_player.fuel_reserve) FROM my_player;"
+            query ="SELECT convert_resource('FUEL', my_player.fuel_reserve)\
+                    FROM my_player;"
         else:
             query ="SELECT convert_resource('FUEL', %s) FROM my_player;"
         
@@ -43,6 +49,15 @@ class db:
         query ="SELECT balance FROM my_player;"
         results = self.fetchone(query)
         return results.balance
+
+    def move_ships(self, planet_destination, ship_ids):
+        query = """\
+        SELECT 
+        SHIP_COURSE_CONTROL(id, current_fuel / 2, null, POINT%s) 
+        FROM my_ships 
+        WHERE id = ANY(%s)"""
+        data = [planet_destination,ship_ids]
+        self.execute(query, data)
 
     def create_ships(self, ships_to_create):
         query = """
