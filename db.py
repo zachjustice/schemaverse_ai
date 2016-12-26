@@ -20,6 +20,10 @@ class db:
         cur.close()
         return results
 
+    def execute_blind(self, query, data=None):
+        cur = self.execute(query, data)
+        cur.close()
+
     def execute(self, query, data=None):
         cur = self.conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
         try:
@@ -57,7 +61,8 @@ class db:
         FROM my_ships 
         WHERE id = ANY(%s)"""
         data = [planet_destination,ship_ids]
-        self.execute(query, data)
+        cur = self.execute(query, data)
+        cur.close()
 
     def create_ships(self, ships_to_create):
         query = """
@@ -81,15 +86,31 @@ class db:
             query = query + ship_str
 
         query = query[:-1] # remove last comma
-        created_ships = self.execute( query )
+        query = query + " RETURNING id;"
+        created_ships = self.fetchall( query )
+        return created_ships
 
+    def bulk_set_ship_actions(self, ship_actions):
+        bulk_query = ""
+        simple_query = """
+        UPDATE my_ships s
+        SET action='%s', action_target_id=%s
+        WHERE s.id = ANY(%s);
+        """
+        for ship_action in ship_actions:
+            bulk_query = bulk_query + simple_query
+
+        self.execute_blind(bulk_query, ship_actions)
+
+    def set_ship_action(self, action, action_target_id, ship_ids)
         query = """
         UPDATE my_ships s
-        SET action='MINE', action_target_id=pir.planet
-        FROM planets_in_range pir WHERE s.id = pir.planet and pir.distance = 0;
+        SET action='%s', action_target_id=%s
+        WHERE s.id = ANY(%s);
         """
-        self.execute(query)
-        return created_ships
+        data = (action, action_target_id, ship_ids)
+        cur = self.execute(query, data)
+        cur.close()
 
     def get_my_ships(self):
         query = """

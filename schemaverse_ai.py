@@ -23,7 +23,8 @@ class FleetController:
         print "ships_in_range:", len(self.ships_in_range)
         print "-----"
 
-        self.create_ships()
+        created_ship_ids = self.create_ships()
+        self.mine(created_ship_ids)
         self.move_ships()
 
     def get_current_tic(self):
@@ -44,6 +45,13 @@ class FleetController:
 
         for s in self.ships:
             self.ships_by_id[s.id] = s
+
+    def mine(self, ship_ids):
+        db = self.db
+        ship_actions = []
+        for ship_id in ship_ids:
+            planet_id = 0 # TODO fix
+            ship_action = ('MINE', planet_id, [ship_id])
 
     def create_ships(self):
         db = self.db

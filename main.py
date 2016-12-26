@@ -5,8 +5,8 @@ import sys
 try:
     lines = [line.rstrip('\n') for line in open('.password')]
     user, password = lines
-except Exception, e:
-    traceback.print_exc("COULDN'T GET PASSWORD OR USERNAME", e)
+except Exception, exception:
+    traceback.print_exc("COULDN'T GET PASSWORD OR USERNAME", exception)
     exit(0)
 
 conn_str = "host=db.schemaverse.com dbname=schemaverse user=" + user + " password=" + password
