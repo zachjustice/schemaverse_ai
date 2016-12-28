@@ -13,6 +13,7 @@ class FleetController:
         self.update_data()
         db.convert_fuel_to_money()
         self.balance = db.get_player_balance()
+        self.create_ships()
 
         print "-----"
         print "TIC", db.get_current_tic()
@@ -21,10 +22,10 @@ class FleetController:
         print "planets:", len(self.planets)
         print "planets_in_range:", len(self.planets_in_range)
         print "ships_in_range:", len(self.ships_in_range)
-        print "-----"
 
-        self.create_ships()
         self.move_ships()
+        db.refuel_ships()
+        print "-----"
 
     def get_current_tic(self):
         return self.db.get_current_tic()
@@ -73,7 +74,7 @@ class FleetController:
                 i = 0
                 print "Moving", len(ship_ids), "ships"
                 while(len(ship_ids) > mine_limit):
-                    destination_planet = sorted_planets[i][0]
+                    destination_planet = sorted_planets[i]
                     destination = (destination_planet.location_x,
                                    destination_planet.location_y)
                     num_ships_to_move = destination_planet.mine_limit
@@ -83,7 +84,7 @@ class FleetController:
                         # if we move all 50 ships, that's too much so
                         # move 50 - 30 = 20 ships instead which is desired behaviour
                         num_ships_to_move = len(ship_ids) - mine_limit
-                    print "moving %s with %s left", num_ships_to_move, len(ship_ids) - num_ships_to_move
+                    print "moving", num_ships_to_move, "ships with", len(ship_ids) - num_ships_to_move, "left"
                     self.db.move_ships(destination, ship_ids[-num_ships_to_move:])
                     ship_ids = ship_ids[:-num_ships_to_move]
                     i = i + 1
@@ -98,7 +99,7 @@ class FleetController:
             planet_locations.append((planet, distance))
         compare_planets = lambda planet1, planet2: int(planet1[1] - planet2[1])
         sorted_planets = sorted(planet_locations,cmp=compare_planets)
-        sorted_planets = [planet for planet, distance in sorted_planet]
+        sorted_planets = [planet for planet, distance in sorted_planets]
         return sorted_planets[1:] # first element will be the source location
 
     def distance(self, a, b):

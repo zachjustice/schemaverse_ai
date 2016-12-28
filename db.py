@@ -20,6 +20,10 @@ class db:
         cur.close()
         return results
 
+    def execute_blind(self, query, data=None):
+        cur = self.execute(query, data)
+        cur.close()
+
     def execute(self, query, data=None):
         cur = self.conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
         try:
@@ -57,7 +61,7 @@ class db:
         FROM my_ships 
         WHERE id = ANY(%s)"""
         data = [planet_destination,ship_ids]
-        self.execute(query, data)
+        self.execute_blind(query, data)
 
     def create_ships(self, ships_to_create):
         query = """
@@ -164,4 +168,8 @@ class db:
                 ships_in_range;"""
         ships_in_range = self.fetchall(query)
         return ships_in_range
+    
+    def refuel_ships(self):
+        query = "SELECT refuel_ship(id) FROM my_ships WHERE current_fuel < max_fuel"
+        self.execute_blind(query)
 
