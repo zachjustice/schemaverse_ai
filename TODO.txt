@@ -1,9 +1,12 @@
 PROBLEMS
-1. code is a little messy and not pythonic
-    Lambdas and list expressions
-
-2. Update ship action to mining after creating ship
-    should be able to pass in an array of values to create ships with
-
-4. Need to keep track of where ships are going and if they overshot
-    set ships to mining after reaching destination
+1. Ships are created on first conquered planet with default params
+    Should create ships on planet with least amount of ships
+    Moving ships is expensive so we might not want to make as many ships as possible
+        Create initial ships
+        Move excess to closest planet at highest speed
+        Create more ships and repeat step 2
+2. Set ships to mine after creation and reaching destination
+    It might not matter whether or not a moving ship is set to mine
+    Only matters if action target is within range
+3. Ships should attack nearest ship
+    Don't make all ships attack one ship, but spread it out

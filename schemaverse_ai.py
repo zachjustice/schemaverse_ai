@@ -149,8 +149,8 @@ class FleetController:
         ax, ay = a
         bx, by = b
 
-        delta_x = math.pow( ax-bx, 2 )
-        delta_y = math.pow( ay-by, 2 )
+        delta_x = math.pow( bx-ax, 2 )
+        delta_y = math.pow( by-ay, 2 )
 
         return math.pow( delta_x + delta_y, 0.5 )
 
