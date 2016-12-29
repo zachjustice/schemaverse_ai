@@ -52,3 +52,12 @@ planets_in_range
     ship_location
     planet_location
     distance
+
+main.py
+    Plays schemaverse using an AI
+    In the future specific configurations of the AI will be determined here
+schemaverse_ai.py
+    An implementation of an ai to play schemaverse
+db.py
+    A class holding helpful queries for playing schemaverse
+    I've used a class here so I don't need to use globals

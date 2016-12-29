@@ -32,7 +32,8 @@ class db:
             else:
                 cur.execute(query, data)
         except Exception, e:
-            traceback.print_exc(e)
+            traceback.print_stack()
+            print "ERROR WITH QUERY: '" + query + "'"
         return cur
 
     def get_current_tic(self):
@@ -49,10 +50,15 @@ class db:
         converted_fuel = self.fetchone(query, [amount])
         return converted_fuel
 
-    def get_player_balance(self):
-        query ="SELECT balance FROM my_player;"
-        results = self.fetchone(query)
-        return results.balance
+    def get_my_player_info(self):
+        query ="""\
+            SELECT
+                id,
+                balance,
+                fuel_reserve
+            FROM my_player;"""
+        player_info = self.fetchone(query)
+        return player_info
 
     def move_ships(self, planet_destination, ship_ids):
         query = """\
@@ -61,56 +67,49 @@ class db:
         FROM my_ships 
         WHERE id = ANY(%s)"""
         data = [planet_destination,ship_ids]
-        cur = self.execute(query, data)
-        cur.close()
+        self.execute_blind(query, data)
 
     def create_ships(self, ships_to_create):
-        query = """
-            INSERT INTO my_ships(
-                attack, defense, engineering, prospecting, location
-            ) VALUES
-        """
-        ship_str = """ (
-            5,5,5,5,
-            (
-                SELECT
-                    location
-                FROM
-                    planets
-                WHERE
-                    conqueror_id=GET_PLAYER_ID(SESSION_USER)
-            )
-        ),"""
+        query = "INSERT INTO my_ships( attack, defense, engineering, prospecting, location) VALUES"
+        ship_str = " ( 0,10,0,10, ( SELECT location FROM planets WHERE conqueror_id=GET_PLAYER_ID(SESSION_USER) ) ),"
 
         for i in range( ships_to_create ):
             query = query + ship_str
 
         query = query[:-1] # remove last comma
         query = query + " RETURNING id;"
-        created_ships = self.fetchall( query )
-        return created_ships
+        created_ship_ids = self.fetchall( query )
+        return created_ship_ids
 
+    # ship_actions is an array of arrays such that
+    # [ 
+    #   [ <action string>, action_target_id, <array of applicable ship ids>]
+    #   ...
+    # ]
+    # bulk set ship actions will then string together a list of update queries
+    # to update the ships to act on the corresponding action target
     def bulk_set_ship_actions(self, ship_actions):
+        data = []
         bulk_query = ""
         simple_query = """
         UPDATE my_ships s
-        SET action='%s', action_target_id=%s
+        SET action=%s, action_target_id=%s
         WHERE s.id = ANY(%s);
         """
         for ship_action in ship_actions:
             bulk_query = bulk_query + simple_query
+            data = data + ship_action
 
-        self.execute_blind(bulk_query, ship_actions)
+        self.execute_blind(bulk_query, data)
 
-    def set_ship_action(self, action, action_target_id, ship_ids)
+    def set_ship_action(self, action, action_target_id, ship_ids):
         query = """
         UPDATE my_ships s
-        SET action='%s', action_target_id=%s
+        SET action=%s, action_target_id=%s
         WHERE s.id = ANY(%s);
         """
         data = (action, action_target_id, ship_ids)
-        cur = self.execute(query, data)
-        cur.close()
+        self.execute_blind(query, data)
 
     def get_my_ships(self):
         query = """
@@ -185,4 +184,8 @@ class db:
                 ships_in_range;"""
         ships_in_range = self.fetchall(query)
         return ships_in_range
+    
+    def refuel_ships(self):
+        query = "SELECT refuel_ship(id) FROM my_ships WHERE current_fuel < max_fuel"
+        self.execute_blind(query)
 
