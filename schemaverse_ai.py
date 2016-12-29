@@ -124,7 +124,7 @@ class FleetController:
                         # if we move all 50 ships, that's too much so
                         # move 50 - 30 = 20 ships instead which is desired behaviour
                         num_ships_to_move = len(ship_ids) - mine_limit
-                    print "    moving", num_ships_to_move, "ships", distance(planet_location, destination), "units to planet", planet_id
+                    print "    moving", num_ships_to_move, "ships", self.distance(planet_location, destination), "units to planet", planet_id
                     ships_to_move = ship_ids[-num_ships_to_move:]
                     self.db.move_ships(destination, ships_to_move)
                     ship_ids = ship_ids[:-num_ships_to_move]
