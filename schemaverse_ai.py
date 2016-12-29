@@ -16,7 +16,7 @@ class FleetController:
         # update data to make correct amount of ships
         self.update_data()
         created_ship_ids = self.create_ships()
-        # update after we've created our the ships so data is up to date
+        # update after we've created our ships
         self.update_data()
 
         # sanity checks
@@ -29,11 +29,10 @@ class FleetController:
         print "planets_in_range:", len(self.planets_in_range)
         print "ships_in_range:", len(self.ships_in_range)
 
-        # if a planet is above mining capacity move ships to new planets
-        moving_ships = self.move_ships()
-        # ships which are not moving should be mining the planets they are on
-        mining_ship_ids = [s for s in self.ships if s not in moving_ships]
-        self.mine(mining_ship_ids)
+        # if a planet is above mining capacity move ships to the closest planets
+        self.move_ships()
+        # all ships which are 0 distance from a planet mine the planet they are on
+        self.mine()
 
         db.refuel_ships()
         print "-----"
@@ -77,8 +76,7 @@ class FleetController:
         self.balance = my_player_info.balance
         self.fuel_reserve = my_player_info.fuel_reserve
 
-    # TODO should probably actually use the ship_ids.
-    def mine(self, ship_ids):
+    def mine(self):
         if len(self.ships_per_planet.values()) < 1:
             return None
 
@@ -90,6 +88,8 @@ class FleetController:
             ship_actions.append(ship_action)
         db.bulk_set_ship_actions(ship_actions)
 
+    # TODO should build ships at the conquered planet with the least ships
+    # TODO should provide array of values for new ship attributes
     def create_ships(self):
         # can't create ships if we don't own any planets to create them on
         if len(self.conquered_planets) < 1:
@@ -112,7 +112,7 @@ class FleetController:
                 planet_location = (planet.location_x, planet.location_y)
                 sorted_planets = self.planets_sorted_by_distance(planet_location)
                 i = 0
-                print "Moving", len(ship_ids), "ships"
+                print "  Planet", planet_id, "has", len(ship_ids), ", minelimit:", mine_limit
                 while(len(ship_ids) > mine_limit):
                     destination_planet = sorted_planets[i]
                     destination = (destination_planet.location_x,
@@ -124,13 +124,12 @@ class FleetController:
                         # if we move all 50 ships, that's too much so
                         # move 50 - 30 = 20 ships instead which is desired behaviour
                         num_ships_to_move = len(ship_ids) - mine_limit
-                    print "moving", num_ships_to_move, "ships with", len(ship_ids) - num_ships_to_move, "left"
+                    print "    moving", num_ships_to_move, "ships", distance(planet_location, destination), "units to planet", planet_id
                     ships_to_move = ship_ids[-num_ships_to_move:]
                     self.db.move_ships(destination, ships_to_move)
                     ship_ids = ship_ids[:-num_ships_to_move]
                     moved_ships.append(ships_to_move)
                     i = i + 1
-                    print "Planet", planet_id, "has", num_ships_to_move, "ships."
         return moved_ships
 
     def planets_sorted_by_distance(self, source_location):
