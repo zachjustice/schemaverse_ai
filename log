@@ -1,0 +1,197 @@
+
+-----
+TIC 184
+Current Balance: 559
+ships: 725
+planets: 1501
+conquered planets: 1
+planets_in_range: 222
+ships_in_range: 222
+  Planet 1502 has 150 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+    moving 30 ships 272597.394839 units to planet 394
+    moving 30 ships 291308.347539 units to planet 460
+    moving 10 ships 299589.835911 units to planet 249
+-----
+
+Sleeping..
+Created Ship ids: 34
+-----
+TIC 185
+Current Balance: 146
+ships: 759
+planets: 1501
+conquered planets: 1
+planets_in_range: 256
+ships_in_range: 256
+  Planet 1502 has 183 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+    moving 30 ships 272597.394839 units to planet 394
+    moving 30 ships 291308.347539 units to planet 460
+    moving 43 ships 299589.835911 units to planet 249
+-----
+
+Sleeping.....
+Created Ship ids: 40
+-----
+TIC 186
+Current Balance: 854
+ships: 797
+planets: 1501
+conquered planets: 1
+planets_in_range: 294
+ships_in_range: 294
+  Planet 1502 has 73 , minelimit: 50
+    moving 23 ships 160227.176824 units to planet 438
+-----
+
+Sleeping......
+Created Ship ids: 39
+-----
+TIC 187
+Current Balance: 440
+ships: 835
+planets: 1501
+conquered planets: 1
+planets_in_range: 262
+ships_in_range: 262
+  Planet 1502 has 89 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+    moving 9 ships 272597.394839 units to planet 394
+-----
+
+Sleeping......
+Created Ship ids: 40
+-----
+TIC 188
+Current Balance: 981
+ships: 874
+planets: 1501
+conquered planets: 1
+planets_in_range: 302
+ships_in_range: 302
+  Planet 1502 has 90 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+    moving 10 ships 272597.394839 units to planet 394
+-----
+
+Sleeping.....
+Created Ship ids: 38
+-----
+TIC 189
+Current Balance: 303
+ships: 912
+planets: 1501
+conquered planets: 1
+planets_in_range: 340
+ships_in_range: 340
+  Planet 1502 has 88 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+    moving 8 ships 272597.394839 units to planet 394
+-----
+
+Sleeping....ERROR WITH QUERY: 'SELECT last_value FROM tic_seq;'
+
+Created Ship ids: 521
+-----
+TIC 204
+Current Balance: 555
+ships: 1419
+planets: 1501
+conquered planets: 1
+planets_in_range: 567
+ships_in_range: 3969
+  Planet 1502 has 566 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+    moving 30 ships 272597.394839 units to planet 394
+    moving 30 ships 291308.347539 units to planet 460
+    moving 100 ships 299589.835911 units to planet 249
+    moving 30 ships 300425.705458 units to planet 463
+    moving 30 ships 318796.729784 units to planet 619
+    moving 30 ships 364833.728279 units to planet 13
+    moving 30 ships 368276.669924 units to planet 768
+    moving 55 ships 408570.621148 units to planet 487
+    moving 30 ships 437094.841015 units to planet 1278
+    moving 30 ships 443428.487069 units to planet 1303
+    moving 30 ships 463735.045189 units to planet 870
+    moving 30 ships 474773.669305 units to planet 1461
+    moving 30 ships 530200.235565 units to planet 444
+    moving 1 ships 531288.311458 units to planet 1450
+-----
+
+Sleeping.
+Created Ship ids: 30
+-----
+TIC 205
+Current Balance: 614
+ships: 1448
+planets: 1501
+conquered planets: 1
+planets_in_range: 596
+ships_in_range: 4172
+  Planet 1502 has 80 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+-----
+
+Sleeping......
+Created Ship ids: 44
+-----
+TIC 206
+Current Balance: 131
+ships: 1491
+planets: 1501
+conquered planets: 1
+planets_in_range: 639
+ships_in_range: 4473
+  Planet 1502 has 95 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+    moving 15 ships 272597.394839 units to planet 394
+-----
+
+Sleeping......
+Created Ship ids: 41
+-----
+TIC 207
+Current Balance: 108
+ships: 1531
+planets: 1501
+conquered planets: 1
+planets_in_range: 679
+ships_in_range: 4753
+  Planet 1502 has 135 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+    moving 30 ships 272597.394839 units to planet 394
+    moving 25 ships 291308.347539 units to planet 460
+-----
+
+Sleeping......
+Created Ship ids: 39
+-----
+TIC 208
+Current Balance: 85
+ships: 1569
+planets: 1501
+conquered planets: 1
+planets_in_range: 717
+ships_in_range: 5019
+  Planet 1502 has 90 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+    moving 10 ships 272597.394839 units to planet 394
+-----
+
+Sleeping......
+Created Ship ids: 38
+-----
+TIC 209
+Current Balance: 74
+ships: 1606
+planets: 1501
+conquered planets: 1
+planets_in_range: 754
+ships_in_range: 5278
+  Planet 1502 has 87 , minelimit: 50
+    moving 30 ships 160227.176824 units to planet 438
+    moving 7 ships 272597.394839 units to planet 394
+-----
+
+Sleeping..
